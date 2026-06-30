@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backslash — Software Development & Consulting</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 2rem 2rem 0;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .logo span {
+      color: #6366f1;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 4rem 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6366f1;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: #a5b4fc;
+    }
+
+    .tagline {
+      font-size: 1.125rem;
+      color: #9ca3af;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .service-tag {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 999px;
+      padding: 0.45rem 1rem;
+      font-size: 0.875rem;
+      color: #d1d5db;
+    }
+
+    .contact-block {
+      border-top: 1px solid #1f1f1f;
+      padding-top: 2.5rem;
+    }
+
+    .contact-block p {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-block a {
+      color: #a5b4fc;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .contact-block a:hover {
+      color: #6366f1;
+    }
+
+    footer {
+      padding: 1.5rem 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #111;
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">back<span>\</span>slash</div>
+  </header>
+
+  <main>
+    <p class="eyebrow">Software Development & Consulting</p>
+    <h1>We build <em>products</em><br>that work.</h1>
+    <p class="tagline">
+      Backslash is a software consultancy based in Croatia, specialising in
+      web development, mobile app development, and technology consulting for
+      businesses of all sizes.
+    </p>
+
+    <div class="services">
+      <span class="service-tag">Web Development</span>
+      <span class="service-tag">Mobile App Development</span>
+      <span class="service-tag">Consulting Services</span>
+    </div>
+
+    <div class="contact-block">
+      <p>Get in touch</p>
+      <a href="mailto:hrvoje.grdic@zoho.eu">hrvoje.grdic@zoho.eu</a>
+    </div>
+  </main>
+
+  <footer>
+    <span>© 2025 Backslash d.o.o.</span>
+    <span>Zagreb, Croatia</span>
+  </footer>
+
+</body>
+</html>
