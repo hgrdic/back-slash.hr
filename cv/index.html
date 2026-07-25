@@ -290,7 +290,7 @@
       header.masthead { margin-bottom: 12pt; }
       .summary { margin-top: 8pt; font-size: 9.6pt; line-height: 1.45; max-width: none; }
 
-      section { margin-bottom: 12pt; }
+      section { margin-bottom: 10pt; }
 
       h2 {
         font-size: 8.2pt;
@@ -316,7 +316,7 @@
 
       .engagements { border-left: 0.75pt solid #ccc !important; padding-left: 9pt; margin-left: 2pt; }
 
-      .role { margin-bottom: 9pt; }
+      .role { margin-bottom: 7.5pt; }
       .role::before {
         width: 4.5pt; height: 4.5pt;
         left: calc(-9pt - 2.6pt);
@@ -328,20 +328,20 @@
       .role h3 { font-size: 10pt; }
       .role .context { font-size: 8.6pt; margin-bottom: 3.5pt; color: #555 !important; }
 
-      ul.bullets li { font-size: 9.4pt; line-height: 1.42; margin-bottom: 2.4pt; max-width: none; padding-left: 8pt; }
+      ul.bullets li { font-size: 9.4pt; line-height: 1.4; margin-bottom: 2pt; max-width: none; padding-left: 8pt; }
       ul.bullets li::before { width: 2.6pt; height: 2.6pt; top: 0.6em; background: #666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
       .dates { font-size: 8.6pt; color: #555 !important; }
 
-      .clients { gap: 4pt; }
+      .clients { gap: 3.4pt; }
       .client { grid-template-columns: 82pt 1fr; gap: 0 10pt; }
       .client .name { font-size: 9.4pt; }
       .client .what { font-size: 9.1pt; line-height: 1.4; }
 
-      .earlier { gap: 6pt; }
+      .earlier { gap: 5pt; }
       .earlier p.detail { font-size: 9.1pt; max-width: none; }
 
-      .skills { gap: 4.5pt; }
+      .skills { gap: 4pt; }
       .skillrow { grid-template-columns: 88pt 1fr; gap: 0 10pt; }
       .skillrow dt { font-size: 7.6pt; letter-spacing: 0.05em; }
       .skillrow dd { font-size: 9.1pt; line-height: 1.4; }
@@ -448,7 +448,17 @@
           <ul class="bullets">
             <li>Sole engineer alongside the founder. Built the <strong>entire product from zero</strong>: architecture, backend, front end, infrastructure and deployment.</li>
             <li>The product I built solo carried the company through its <strong>$2M Series A</strong>; an in-house team was hired after the raise, and the product remains in operation today.</li>
-            <li>Eighteen months of direct founder collaboration: scoping, prioritisation, and shipping to investor-facing deadlines without a team to fall back on.</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head">
+            <h3>Client engagements via <span class="at">Toptal</span></h3>
+            <span class="dates">2014 – 2018</span>
+          </div>
+          <p class="context">US and EU clients · Ruby on Rails, Node.js, React, Android</p>
+          <ul class="bullets">
+            <li>Back-to-back contract delivery across payments, e-commerce, retail and mobile, for clients ranging from early-stage startups to household-name platforms. Highlights listed below.</li>
           </ul>
         </div>
 
@@ -466,7 +476,7 @@
 
         <div class="client">
           <div class="name">Digital signage network</div>
-          <div class="what">Rails platform for an advertising company running screens across hotels and venues, covering central ad management and per-display playlist scheduling. Held a contractual <strong>7-minute publishing deadline</strong> on large multi-page playlists by sharding the workload and fanning it out across <strong>AWS Lambda</strong>, backed by Redis caching. Packaged Lambda code as Docker images and split live traffic across EC2 and Lambda targets behind an <strong>ALB with weighted routing</strong>.</div>
+          <div class="what">Rails platform for an advertising company running screens across hotels and venues: central ad management and per-display playlist scheduling. Held a contractual <strong>7-minute publishing deadline</strong> on large playlists by sharding work across <strong>AWS Lambda</strong> with Redis caching, packaging Lambda code as Docker images and splitting live traffic across EC2 and Lambda behind an <strong>ALB with weighted routing</strong>.</div>
         </div>
 
         <div class="client">
@@ -514,7 +524,7 @@
       <div class="clients">
         <div class="client">
           <div class="name">treblle-ruby</div>
-          <div class="what">Author of the <strong>official Treblle SDK for Ruby</strong>: Rails middleware that reports API requests, responses and errors to Treblle's API monitoring platform, while keeping sensitive fields out of what leaves the application. MIT licensed · <a href="https://github.com/Treblle/treblle-ruby">github.com/Treblle/treblle-ruby</a></div>
+          <div class="what">Author of the <strong>official Treblle SDK for Ruby</strong>: Rails middleware reporting API requests, responses and errors to Treblle's monitoring platform, while keeping sensitive fields out of what leaves the application. MIT licensed · <a href="https://github.com/Treblle/treblle-ruby">github.com/Treblle/treblle-ruby</a></div>
         </div>
       </div>
     </section>
@@ -529,7 +539,6 @@
             <span class="dates">2013 – 2014</span>
           </div>
           <p class="context">Telecommunications · Java</p>
-          <p class="detail">Java engineering at one of the world's largest telecommunications equipment makers.</p>
         </div>
 
         <div>
@@ -538,7 +547,7 @@
             <span class="dates">2012 – 2013</span>
           </div>
           <p class="context">Banking · Java</p>
-          <p class="detail">In-house Java engineering at one of Croatia's largest banks, and the start of a career-long specialisation in financial software.</p>
+          <p class="detail">One of Croatia's largest banks, and the start of a career-long specialisation in financial software.</p>
         </div>
 
         <div>
