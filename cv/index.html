@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hrvoje Grdic · Rails &amp; React Engineer, Payments &amp; Fintech</title>
+  <meta name="description" content="Senior Ruby on Rails and React engineer, tech lead. 14 years building production software, 12 contracting. Payments and fintech specialist. Zagreb, Croatia." />
+
+  <meta property="og:title" content="Hrvoje Grdic · Rails &amp; React Engineer, Payments &amp; Fintech" />
+  <meta property="og:description" content="14 years building production software, 12 contracting through Backslash d.o.o. Payments, fintech, and systems where downtime costs money." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://back-slash.hr/cv/" />
+
+  <style>
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #101010;
+      --border:    #232323;
+      --text:      #e5e5e5;
+      --text-dim:  #a3a3a3;
+      --text-faint:#737373;
+      --heading:   #ffffff;
+      --accent:    #6366f1;
+      --accent-dim:#818cf8;
+
+      --maxw: 820px;
+      --fs-body: 1rem;
+      --lh-body: 1.6;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 5rem;
+    }
+
+    a { color: var(--accent-dim); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ---------- top bar ---------- */
+
+    .topbar {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--heading);
+    }
+    .logo span { color: var(--accent); }
+    .topbar-actions { display: flex; gap: 1.25rem; font-size: 0.85rem; }
+
+    /* ---------- header ---------- */
+
+    header.masthead { margin-bottom: 2.75rem; }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.9rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--heading);
+      margin-bottom: 0.6rem;
+    }
+
+    .role-line {
+      font-size: clamp(1rem, 2.4vw, 1.18rem);
+      color: var(--accent-dim);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.1rem;
+    }
+
+    .contact-line {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.85rem;
+      align-items: center;
+    }
+    .contact-line .sep { color: var(--text-faint); }
+
+    .summary {
+      margin-top: 1.6rem;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text);
+      max-width: 62ch;
+    }
+    .summary strong { color: var(--heading); font-weight: 600; }
+
+    /* ---------- sections ---------- */
+
+    section { margin-bottom: 2.75rem; }
+
+    h2 {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ---------- the umbrella entry ---------- */
+
+    .umbrella {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .umbrella .org-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .umbrella h3 { font-size: 1.15rem; font-weight: 650; color: var(--heading); letter-spacing: -0.015em; }
+    .umbrella .org-role { color: var(--text-dim); font-weight: 400; }
+    .umbrella .blurb { margin-top: 0.6rem; color: var(--text-dim); font-size: 0.95rem; max-width: 66ch; }
+
+    .dates {
+      font-size: 0.85rem;
+      color: var(--text-faint);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* ---------- engagements ---------- */
+
+    .engagements { border-left: 2px solid var(--border); padding-left: 1.5rem; margin-left: 0.25rem; }
+
+    .role { margin-bottom: 1.9rem; position: relative; }
+    .role:last-child { margin-bottom: 0; }
+
+    .role::before {
+      content: "";
+      position: absolute;
+      left: calc(-1.5rem - 5px);
+      top: 0.62em;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--bg);
+    }
+
+    .role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .role h3 { font-size: 1.05rem; font-weight: 650; color: var(--heading); letter-spacing: -0.01em; }
+    .role h3 .at { color: var(--text-dim); font-weight: 400; }
+    .role .context { font-size: 0.88rem; color: var(--text-faint); margin-top: 0.15rem; margin-bottom: 0.7rem; }
+
+    ul.bullets { list-style: none; }
+    ul.bullets li {
+      position: relative;
+      padding-left: 1.05rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      max-width: 68ch;
+    }
+    ul.bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.66em;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--text-faint);
+    }
+    ul.bullets li:last-child { margin-bottom: 0; }
+    ul.bullets strong { color: var(--heading); font-weight: 600; }
+
+    /* ---------- selected clients ---------- */
+
+    .clients { display: grid; gap: 0.85rem; }
+    .client {
+      display: grid;
+      grid-template-columns: 11.5rem 1fr;
+      gap: 0.25rem 1.25rem;
+      align-items: baseline;
+    }
+    .client .name { font-weight: 600; color: var(--heading); font-size: 0.95rem; }
+    .client .what { color: var(--text-dim); font-size: 0.93rem; line-height: 1.5; }
+    @media (max-width: 640px) {
+      .client { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- earlier roles ---------- */
+
+    .earlier { display: grid; gap: 1.1rem; }
+    .earlier .role-head h3 { font-size: 1rem; }
+    .earlier .context { margin-bottom: 0.35rem; }
+    .earlier p.detail { font-size: 0.93rem; color: var(--text-dim); max-width: 68ch; }
+
+    /* ---------- skills ---------- */
+
+    .skills { display: grid; gap: 1rem; }
+    .skillrow { display: grid; grid-template-columns: 10.5rem 1fr; gap: 0.3rem 1.25rem; align-items: baseline; }
+    .skillrow dt {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .skillrow dd { color: var(--text); font-size: 0.95rem; line-height: 1.55; }
+    @media (max-width: 640px) {
+      .skillrow { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- education ---------- */
+
+    .edu-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .edu-head h3 { font-size: 1rem; font-weight: 650; color: var(--heading); }
+    .edu .context { font-size: 0.9rem; color: var(--text-dim); margin-top: 0.2rem; }
+
+    /* ---------- footer ---------- */
+
+    footer.site {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--text-faint);
+    }
+
+    /* =======================================================
+       PRINT: invert to dark-on-white, A4, ATS-safe text
+       ======================================================= */
+
+    @page {
+      size: A4;
+      margin: 13mm 14mm;
+    }
+
+    @media print {
+      :root {
+        --bg:        #ffffff;
+        --surface:   #ffffff;
+        --border:    #cccccc;
+        --text:      #1a1a1a;
+        --text-dim:  #333333;
+        --text-faint:#555555;
+        --heading:   #000000;
+        --accent:    #3730a3;
+        --accent-dim:#3730a3;
+      }
+
+      html, body {
+        background: #ffffff !important;
+        color: #1a1a1a !important;
+        font-size: 9.6pt;
+        line-height: 1.42;
+      }
+
+      .topbar, footer.site, .topbar-actions { display: none !important; }
+
+      .wrap { max-width: none; padding: 0; margin: 0; }
+
+      a { color: #1a1a1a !important; text-decoration: none !important; }
+
+      h1 { font-size: 20pt; margin-bottom: 2pt; color: #000 !important; }
+      .role-line { font-size: 10.5pt; color: #3730a3 !important; margin-bottom: 5pt; }
+      .contact-line { font-size: 8.7pt; color: #333 !important; gap: 2pt 7pt; }
+
+      header.masthead { margin-bottom: 12pt; }
+      .summary { margin-top: 8pt; font-size: 9.6pt; line-height: 1.45; max-width: none; }
+
+      section { margin-bottom: 12pt; }
+
+      h2 {
+        font-size: 8.2pt;
+        letter-spacing: 0.12em;
+        color: #3730a3 !important;
+        padding-bottom: 3pt;
+        margin-bottom: 8pt;
+        border-bottom: 0.75pt solid #999 !important;
+      }
+
+      /* keep a heading with the content under it */
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+
+      /* never split a role across pages mid-bullet */
+      .role, .client, .earlier > div, .skillrow, .edu {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .umbrella { margin-bottom: 9pt; padding-bottom: 7pt; border-bottom: 0.75pt dashed #bbb !important; }
+      .umbrella h3 { font-size: 11.5pt; }
+      .umbrella .blurb { font-size: 9pt; margin-top: 3pt; max-width: none; }
+
+      .engagements { border-left: 0.75pt solid #ccc !important; padding-left: 9pt; margin-left: 2pt; }
+
+      .role { margin-bottom: 9pt; }
+      .role::before {
+        width: 4.5pt; height: 4.5pt;
+        left: calc(-9pt - 2.6pt);
+        background: #3730a3 !important;
+        box-shadow: 0 0 0 1.5pt #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .role h3 { font-size: 10pt; }
+      .role .context { font-size: 8.6pt; margin-bottom: 3.5pt; color: #555 !important; }
+
+      ul.bullets li { font-size: 9.4pt; line-height: 1.42; margin-bottom: 2.4pt; max-width: none; padding-left: 8pt; }
+      ul.bullets li::before { width: 2.6pt; height: 2.6pt; top: 0.6em; background: #666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      .dates { font-size: 8.6pt; color: #555 !important; }
+
+      .clients { gap: 4pt; }
+      .client { grid-template-columns: 82pt 1fr; gap: 0 10pt; }
+      .client .name { font-size: 9.4pt; }
+      .client .what { font-size: 9.1pt; line-height: 1.4; }
+
+      .earlier { gap: 6pt; }
+      .earlier p.detail { font-size: 9.1pt; max-width: none; }
+
+      .skills { gap: 4.5pt; }
+      .skillrow { grid-template-columns: 88pt 1fr; gap: 0 10pt; }
+      .skillrow dt { font-size: 7.6pt; letter-spacing: 0.05em; }
+      .skillrow dd { font-size: 9.1pt; line-height: 1.4; }
+
+      /* force the accent + rules to actually render */
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <!-- links to /cv/ for now; point at / once the root landing page is restored -->
+    <a class="logo" href="/cv/">back<span>\</span>slash</a>
+    <div class="topbar-actions">
+      <a href="Hrvoje-Grdic-CV.pdf">Download PDF</a>
+      <a href="mailto:hrvoje.grdic1@gmail.com">Email</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <header class="masthead">
+      <h1>Hrvoje Grdic</h1>
+      <p class="role-line">Ruby on Rails &amp; React Engineer · Tech Lead · Payments &amp; Fintech</p>
+      <p class="contact-line">
+        <span>Zagreb, Croatia</span>
+        <span class="sep">·</span>
+        <span>Remote (EU &amp; US overlap)</span>
+        <span class="sep">·</span>
+        <a href="mailto:hrvoje.grdic1@gmail.com">hrvoje.grdic1@gmail.com</a>
+        <span class="sep">·</span>
+        <a href="https://back-slash.hr">back-slash.hr</a>
+        <span class="sep">·</span>
+        <!-- caphg, not hgrdic: this is the account carrying his real name and the
+             treblle-ruby commits, so it corroborates the Open Source section. -->
+        <a href="https://github.com/caphg">github.com/caphg</a>
+        <!-- LinkedIn deliberately omitted: Hrvoje's profile is out of date.
+             Add it here once refreshed to match this CV. -->
+      </p>
+
+      <p class="summary">
+        Software engineer since 2011, contracting since 2014 through my own consultancy.
+        I build and operate systems where money moves and mistakes are expensive: payment
+        processing, billing, reconciliation and large-scale third-party integration.
+        Usually the <strong>single point of technical ownership</strong>: architecture,
+        implementation, AWS infrastructure, deploys and on-call, end to end.
+      </p>
+    </header>
+
+    <section>
+      <h2>Experience</h2>
+
+      <div class="umbrella">
+        <div class="org-head">
+          <h3>Backslash d.o.o., <span class="org-role">Founder &amp; Principal Engineer</span></h3>
+          <span class="dates">2014 – Present</span>
+        </div>
+        <p class="blurb">
+          Independent software consultancy in Zagreb, delivering long-running engagements
+          for clients in payments, e-commerce and SaaS. Member of the <strong>Toptal</strong>
+          network, whose screening process admits roughly the top 3% of applicants.
+        </p>
+      </div>
+
+      <div class="engagements">
+
+        <div class="role">
+          <div class="role-head">
+            <h3>RunPayments, <span class="at">Tech Lead</span></h3>
+            <span class="dates">Mar 2023 – Present</span>
+          </div>
+          <p class="context">Payment processing platform · Ruby on Rails, React, AWS</p>
+          <ul class="bullets">
+            <li>Technical lead and sole owner of a production <strong>payment processing platform</strong>: data model, application, front end, infrastructure and release process.</li>
+            <li>Engineered for correctness under money-movement constraints: <strong>idempotent transaction handling</strong>, reconciliation, auditable state transitions, and backwards-compatible, non-destructive migrations.</li>
+            <li>Run the entire <strong>AWS estate single-handedly</strong> (networking, compute, RDS, caching, object storage, IAM, monitoring and alerting), with zero-downtime deploys and rehearsed rollback paths.</li>
+            <li>Built the React operator and merchant surfaces on top of the Rails API.</li>
+            <li>Operate a <strong>multi-database</strong> platform, PostgreSQL on RDS alongside Oracle, with the Oracle side containerised in Docker so tests run against a reproducible local instance.</li>
+            <li>Single point of accountability for uptime: on-call, incident response, capacity planning and infrastructure cost.</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head">
+            <h3>Hubstaff, <span class="at">Senior Engineer</span></h3>
+            <span class="dates">Jan 2020 – Feb 2023</span>
+          </div>
+          <p class="context">Time tracking, payroll &amp; invoicing SaaS · Ruby on Rails, Vue.js</p>
+          <ul class="bullets">
+            <li>Owned the integrations platform: roughly <strong>30 third-party integrations</strong> across project management, accounting and payment providers, keeping time-tracking, project and payment data continuously in sync.</li>
+            <li>Designed sync to survive the real world: rate limits, partial failures, backfills, webhook-plus-polling hybrids, and constant upstream API drift across dozens of independent vendors.</li>
+            <li>Worked across the payroll and invoicing paths, where sync errors surface directly as incorrect payments.</li>
+            <li>Full-stack delivery in Rails and Vue.js on a large, long-lived production codebase.</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head">
+            <h3>Capitalize, <span class="at">Founding Engineer (sole)</span></h3>
+            <span class="dates">2018 – 2019</span>
+          </div>
+          <p class="context">Fintech startup · Ruby on Rails, React</p>
+          <ul class="bullets">
+            <li>Sole engineer alongside the founder. Built the <strong>entire product from zero</strong>: architecture, backend, front end, infrastructure and deployment.</li>
+            <li>The product I built solo carried the company through its <strong>$2M Series A</strong>; an in-house team was hired after the raise, and the product remains in operation today.</li>
+            <li>Eighteen months of direct founder collaboration: scoping, prioritisation, and shipping to investor-facing deadlines without a team to fall back on.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <h2>Selected Client Engagements</h2>
+      <div class="clients">
+
+        <div class="client">
+          <div class="name">BigCommerce</div>
+          <div class="what">Real-time Rails sync engine holding items, orders, customers and payments consistent across <strong>BigCommerce, Square and Clover</strong>. Background-job architecture built around ordering guarantees, retries and idempotency.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">Digital signage network</div>
+          <div class="what">Rails platform for an advertising company running screens across hotels and venues, covering central ad management and per-display playlist scheduling. Held a contractual <strong>7-minute publishing deadline</strong> on large multi-page playlists by sharding the workload and fanning it out across <strong>AWS Lambda</strong>, backed by Redis caching. Packaged Lambda code as Docker images and split live traffic across EC2 and Lambda targets behind an <strong>ALB with weighted routing</strong>.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">Clover</div>
+          <div class="what">Android applications for the Clover merchant device ecosystem, including native bridges between Android and Clover's SDK, and hybrid Ionic / Cordova integrations.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">US sandwich franchise</div>
+          <div class="what">Customer ordering application with deep <strong>Clover</strong> integration: kitchen and customer-facing receipt printing, plus a loyalty programme. <em>Chain name under NDA.</em></div>
+        </div>
+
+        <!-- NDA-conservative wording: tech and category only, no product rationale.
+             Expand or reduce to a bare logo on Hrvoje's call. -->
+        <div class="client">
+          <div class="name">Western Union</div>
+          <div class="what">Node.js and Android development for customer-operated self-service terminals.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">Philips</div>
+          <div class="what">Large JavaScript ordering application for an apparel catalogue.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">Boating in Boston</div>
+          <div class="what">Ruby on Rails and Angular.js web application.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">Griot</div>
+          <div class="what">React Native and Android application built around <strong>real-time voice and video calling</strong> between field workers and remote support.</div>
+        </div>
+
+        <div class="client">
+          <div class="name">Also</div>
+          <div class="what">20+ further engagements across payments, e-commerce and SaaS since 2014.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <h2>Open Source</h2>
+      <div class="clients">
+        <div class="client">
+          <div class="name">treblle-ruby</div>
+          <div class="what">Author of the <strong>official Treblle SDK for Ruby</strong>: Rails middleware that reports API requests, responses and errors to Treblle's API monitoring platform, while keeping sensitive fields out of what leaves the application. MIT licensed · <a href="https://github.com/Treblle/treblle-ruby">github.com/Treblle/treblle-ruby</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Earlier Experience</h2>
+      <div class="earlier">
+
+        <div>
+          <div class="role-head">
+            <h3>Ericsson, <span class="at">Software Engineer</span></h3>
+            <span class="dates">2013 – 2014</span>
+          </div>
+          <p class="context">Telecommunications · Java</p>
+          <p class="detail">Java engineering at one of the world's largest telecommunications equipment makers.</p>
+        </div>
+
+        <div>
+          <div class="role-head">
+            <h3>PBZ (Privredna banka Zagreb), <span class="at">Software Engineer</span></h3>
+            <span class="dates">2012 – 2013</span>
+          </div>
+          <p class="context">Banking · Java</p>
+          <p class="detail">In-house Java engineering at one of Croatia's largest banks, and the start of a career-long specialisation in financial software.</p>
+        </div>
+
+        <div>
+          <div class="role-head">
+            <h3>Iskon Internet, <span class="at">Software Engineer</span></h3>
+            <span class="dates">2011 – 2012</span>
+          </div>
+          <p class="context">Internet service provider · Hrvatski Telekom group</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <dl class="skills">
+        <div class="skillrow">
+          <dt>Backend</dt>
+          <dd>Ruby on Rails, Ruby, Python (Django), Node.js, REST &amp; webhook API design, background-job architecture</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Frontend</dt>
+          <dd>React, Vue.js, Angular.js, JavaScript</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Mobile</dt>
+          <dd>Android (Java), React Native, Clover SDK &amp; native bridges, Ionic, Cordova</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Infrastructure</dt>
+          <dd>AWS (EC2, Lambda, RDS, S3, VPC, IAM, CloudWatch, ALB), Heroku, Vercel</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Deployment</dt>
+          <dd>Docker, containerised services and Lambda images, ALB weighted routing, autoscaling, zero-downtime releases, monitoring &amp; on-call</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Testing &amp; Perf</dt>
+          <dd>RSpec, Jest, Faker, DatabaseCleaner, performance profiling, memory and query analysis, production debugging</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Data &amp; Caching</dt>
+          <!-- MySQL listed generically and unattributed: no link to any client. -->
+          <dd>PostgreSQL (RDS), Oracle, MySQL, Redis, Memcached, queueing and job pipelines</dd>
+        </div>
+        <div class="skillrow">
+          <dt>Domain</dt>
+          <dd>Payment processing, billing &amp; invoicing, reconciliation, idempotency &amp; consistency, third-party integration at scale</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="edu">
+      <h2>Education</h2>
+      <div class="edu-head">
+        <h3>MSc, Computing</h3>
+        <span class="dates">Zagreb, Croatia</span>
+      </div>
+      <p class="context">University of Zagreb, Faculty of Electrical Engineering and Computing (FER)</p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>© 2025 Backslash d.o.o.</span>
+    <span>Zagreb, Croatia</span>
+  </footer>
+
+</body>
+</html>
