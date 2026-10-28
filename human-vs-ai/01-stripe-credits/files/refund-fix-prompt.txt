@@ -1,0 +1,1 @@
+I tested my app and found a problem. A customer can buy 50 credits, use a few, then get a refund or open a chargeback with their bank, and they still keep all their credits. Please fix it so refunds and chargebacks take the credits back.

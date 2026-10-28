@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI built Stripe credits app, audited · Backslash</title>
+  <meta name="description" content="Three Claude models built the same Stripe credits app. The signature checks were right. The example secret and refunds were not. Video, prompts, full transcripts and code." />
+
+  <meta property="og:title" content="AI writes correct Stripe signature checks now. Its example file still gives the secret away." />
+  <meta property="og:description" content="Three Claude models, one ordinary prompt, a payments audit. Video, prompts, full transcripts and code." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://back-slash.hr/human-vs-ai/01-stripe-credits/" />
+
+  <style>
+    :root {
+      --bg:         #0a0a0a;
+      --bg-raised:  #101011;
+      --border:     #1f1f22;
+      --border-lit: #2a2a30;
+      --text:       #e5e5e5;
+      --text-dim:   #9ca3af;
+      --text-faint: #6b7280;
+      --heading:    #ffffff;
+      --accent:     #6366f1;
+      --accent-lit: #a5b4fc;
+
+      --maxw: 760px;
+      --gutter: 1.5rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent-lit); text-decoration: none; }
+    a:hover { color: var(--accent); }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+      width: 100%;
+    }
+
+    /* ---------------- nav ---------------- */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10,10,10,0.82);
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1.15rem;
+      padding-bottom: 1.15rem;
+    }
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--heading);
+      white-space: nowrap;
+    }
+    .logo span { color: var(--accent); }
+    .navlinks { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+    .navlinks a { color: var(--text-dim); }
+    .navlinks a:hover { color: var(--heading); }
+
+    /* ---------------- article ---------------- */
+
+    header.post { padding: 3.5rem 0 2rem; }
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-lit);
+      margin-bottom: 1.1rem;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: var(--heading);
+      margin-bottom: 1.1rem;
+    }
+    .meta { color: var(--text-faint); font-size: 0.9rem; }
+
+    .video {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video .pending {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--text-faint);
+      font-size: 0.95rem;
+    }
+
+    article h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--heading);
+      margin: 2.4rem 0 0.8rem;
+    }
+    article p, article li { color: var(--text-dim); font-size: 1.02rem; }
+    article p + p { margin-top: 1rem; }
+    article strong { color: var(--text); font-weight: 600; }
+    article ol { padding-left: 1.3rem; display: grid; gap: 0.5rem; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.88em;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.05rem 0.35rem;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    /* ---------------- files ---------------- */
+
+    .files { display: grid; gap: 0.75rem; margin-top: 1rem; }
+    .file-group {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.3rem;
+    }
+    .file-group h3 {
+      font-size: 0.98rem;
+      font-weight: 650;
+      color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+    .file-group ul { list-style: none; display: grid; gap: 0.35rem; }
+    .file-group li { font-size: 0.94rem; color: var(--text-dim); }
+    .file-group .note { font-size: 0.85rem; color: var(--text-faint); margin-top: 0.6rem; }
+
+    .cta {
+      margin: 3rem 0 1rem;
+      padding: 1.6rem 1.5rem;
+      border: 1px solid rgba(99,102,241,0.28);
+      background: rgba(99,102,241,0.07);
+      border-radius: 12px;
+    }
+    .cta p { color: var(--text); }
+    .cta a { font-weight: 600; }
+
+    /* ---------------- footer ---------------- */
+
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+      padding: 1.75rem 0 2.5rem;
+      font-size: 0.85rem;
+      color: var(--text-faint);
+    }
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.6rem 1.5rem;
+    }
+    footer a { color: var(--text-faint); }
+    footer a:hover { color: var(--text-dim); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="logo" href="/">back<span>\</span>slash</a>
+      <div class="navlinks">
+        <a href="/cv/">CV</a>
+        <a href="/#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header class="post">
+      <p class="eyebrow">Human vs AI · Episode 1</p>
+      <h1>AI writes correct Stripe signature checks now. Its example file still gives the secret away.</h1>
+      <p class="meta">Builds run on 24 October 2026 with Claude Opus 5.5, Sonnet 5.5 and Haiku 5.5 in Claude Code 2.1.304.</p>
+    </header>
+
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/m25AI5mqxiw" title="AI Built a Stripe Integration. I Forged a Payment With Its Own Example File" loading="lazy"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <article>
+      <p>I gave three Claude models the same request a founder would type: a Next.js app where users buy credits with Stripe Checkout and spend them. No mention of security. Then I audited the payment code the way I would for a client.</p>
+
+      <h2>What they got right</h2>
+      <p>All three verified the webhook signature on the raw request body, so a forged "payment succeeded" event with no signature is rejected. All three kept prices on the server, checked that the session was paid and the amount matched, recorded each checkout session so a replayed event never adds credits twice, and spent credits with a single atomic update. A year ago these were the mistakes I expected to find. Today's models handle them.</p>
+
+      <h2>Where it still breaks: the secret, not the check</h2>
+      <p>Each build shipped an <code>.env.example</code> with a placeholder webhook secret, and nothing in the code refuses to start with it. Copy that example to <code>.env</code> and forget to replace the secret, which is easy because the real one comes from a different place than your Stripe key, and the value "verifying" every webhook is a public string anyone can read in the repo. I signed three fake <code>checkout.session.completed</code> events with it and got 150 credits for nothing, on all three apps.</p>
+      <p>The telling part is that the app already knew how to do better. The success page after checkout calls <code>stripe.checkout.sessions.retrieve</code> to confirm the payment with Stripe directly. The webhook doesn't; it trusts whatever it just verified with the secret. So a weak secret is fatal on the webhook and invisible everywhere else. Two fixes a reviewer would add: refuse to boot on a placeholder or missing secret, and have the webhook fetch the session from Stripe again before crediting, the way the success page does.</p>
+
+      <h2>What they all missed: money going back</h2>
+      <p>When a purchase is refunded, Stripe sends <code>charge.refunded</code>; when a customer disputes the charge with their bank, it sends <code>charge.dispute.created</code>. None of the three listened for either. Pay $20 for 50 credits, get a full refund, keep every credit. This one needs no misconfiguration at all.</p>
+
+      <h2>The AI fix</h2>
+      <p>I described the refund problem to Opus 5.5 without hinting at a solution. Its fix stored the payment intent with each purchase, took back a matching share of credits on partial refunds, handled the same event arriving twice, and stopped the balance at zero rather than failing.</p>
+
+      <h2>What still needs a human decision</h2>
+      <p>A customer who spends all 50 credits and then disputes the charge ends at zero, with the account still open. Whether to lock the account, refund only unused credits or fight the dispute is a business rule, not a coding task. In the real world, a chargeback means the customer says they didn't intend the purchase or didn't get to use it, so it should be refunded, or at least the unused part. Unhappy paths like this only work when someone calls them out explicitly; otherwise they stay forgotten until a real user hits one.</p>
+
+      <h2>Check your own app</h2>
+      <ol>
+        <li>Is your webhook secret one you actually set, or still the example? Would the app even start if it were obviously a placeholder?</li>
+        <li>Refund a test payment. Does anything change in your app?</li>
+        <li>Open a test dispute (Stripe has a test card for it). What happens?</li>
+      </ol>
+
+      <h2>The files</h2>
+      <p>Everything from the runs is here as it came out: the prompts I gave, the full transcripts of each run and the code the AI committed. Nothing the AI wrote was edited. Real keys, local databases and my machine's config are left out; the only secrets in the code are the public placeholders in each <code>.env.example</code>. Everything ran in Stripe test mode on my own machine.</p>
+
+      <div class="files">
+        <div class="file-group">
+          <h3>Prompts</h3>
+          <ul>
+            <li><a href="files/build-prompt.txt">Build prompt</a>, the same for all three models</li>
+            <li><a href="files/refund-fix-prompt.txt">Refund fix prompt</a></li>
+          </ul>
+        </div>
+        <div class="file-group">
+          <h3>Transcripts</h3>
+          <ul>
+            <li><a href="files/transcripts/opus-5-5-build.txt">Opus 5.5 build</a> (6 minutes 28 seconds)</li>
+            <li><a href="files/transcripts/sonnet-5-5-build.txt">Sonnet 5.5 build</a></li>
+            <li><a href="files/transcripts/haiku-5-5-build.txt">Haiku 5.5 build</a></li>
+            <li><a href="files/transcripts/opus-5-5-refund-fix.txt">Opus 5.5 refund fix</a></li>
+            <li><a href="files/transcripts/raw-logs.zip">Raw logs</a>, the untouched Claude Code output with run times</li>
+          </ul>
+        </div>
+        <div class="file-group">
+          <h3>Code</h3>
+          <ul>
+            <li><a href="files/code/opus-5-5-build.zip">Opus 5.5 build</a></li>
+            <li><a href="files/code/opus-5-5-with-refund-fix.zip">Opus 5.5 build with its refund fix</a></li>
+            <li><a href="files/code/sonnet-5-5-build.zip">Sonnet 5.5 build</a></li>
+            <li><a href="files/code/haiku-5-5-build.zip">Haiku 5.5 build</a></li>
+          </ul>
+          <p class="note">The Opus build had one fix to the tooling, not the code: my build script overwrote the AI's own <code>.gitignore</code> before the first commit, so the second commit puts its file back. The raw logs show both.</p>
+        </div>
+        <div class="file-group">
+          <h3>Checks</h3>
+          <ul>
+            <li><a href="files/checks.zip">The attack and check scripts</a>, plus the tools that ran and replayed the builds</li>
+          </ul>
+          <p class="note">The commands in the video are scripted, so every take is the same and no real keys end up on screen. The AI runs are replayed from these logs.</p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <p>Shipping an AI built app that takes money? I review exactly this. <a href="mailto:hrvoje.grdic1@gmail.com">Get in touch</a>.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© Backslash d.o.o.</span>
+      <span>Zagreb, Croatia · <a href="/cv/">CV</a> · <a href="mailto:hrvoje.grdic1@gmail.com">Email</a></span>
+    </div>
+  </footer>
+</body>
+</html>

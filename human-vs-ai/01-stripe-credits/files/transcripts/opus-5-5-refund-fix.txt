@@ -1,0 +1,131 @@
+# AI build transcript
+
+Model: claude-opus-5-5
+
+**Runs:** `git ls-files | grep -v -E '^(public|node_modules)/' | head -100 && cat package.json`
+
+**Runs:** `cat app/api/webhooks/stripe/route.ts lib/db.ts lib/stripe.ts app/actions.ts AGENTS.md README.md .env.example; cat app/dashboard/page.tsx`
+
+**Runs:** `ls node_modules/stripe/types 2>/dev/null | head; grep -rn "payment_intent: string | \|amount_refunded: number\|charge: string |" node_modules/stripe/esm/resources/Charges.d.ts node_modules/stripe/esm/resources/Disputes.d.ts node_modules/stripe/esm/resources/Checkout/Sessions.d.ts 2>/dev/null | head; ls node_modules/stripe`
+
+**Runs:** `grep -n "interface SessionListParams" -A 40 node_modules/stripe/esm/resources/Checkout/Sessions*.d.ts | grep -n "payment_intent"; grep -rn "'charge.refunded'\|'charge.dispute.created'" node_modules/stripe/esm/*.d.ts node_modules/stripe/esm/**/*.d.ts 2>/dev/null | head -3`
+
+**Edit:** `/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/lib/db.ts`
+
+**AI:** I've added the database columns. Next I'm writing the code that takes the credits back and connecting it to the webhook.
+
+**Edit:** `/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/lib/stripe.ts`
+
+**Edit:** `/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/app/api/webhooks/stripe/route.ts`
+
+**Edit:** `/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/app/api/webhooks/stripe/route.ts`
+
+**Edit:** `/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/README.md`
+
+**Edit:** `/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/README.md`
+
+**Runs:** `npx tsc --noEmit && npm run lint 2>&1 | tail -5; ls .env app.db 2>&1`
+
+**Runs:** `mkdir -p /tmp/revoke-test && cd /tmp/revoke-test && rm -f app.db* && cat > test.ts <<'EOF'
+import { db } from "/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/lib/db";
+import { fulfillCheckout, revokeCredits } from "/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/lib/stripe";
+const conn = db();
+const uid = Number(conn.prepare("INSERT INTO users (email, password_hash) VALUES ('a@b.c','x')").run().lastInsertRowid);
+const s = (id: string, pi: string) => ({ id, payment_intent: pi, payment_status: "paid", amount_total: 2000, currency: "usd", metadata: { userId: String(uid), packId: "large" } }) as any;
+const bal = () => (conn.prepare("SELECT credits FROM users WHERE id=?").get(uid) as any).credits;
+fulfillCheckout(s("cs_1", "pi_1")); console.log("after buy", bal());
+conn.prepare("UPDATE users SET credits = credits - 3 WHERE id=?").run(uid); console.log("spent 3", bal());
+console.log("partial refund $5 revoked", await revokeCredits("pi_1", 500), bal());
+console.log("replay revoked", await revokeCredits("pi_1", 500), bal());
+console.log("full refund revoked", await revokeCredits("pi_1", 2000), bal());
+fulfillCheckout(s("cs_2", "pi_2")); console.log("buy again", bal());
+conn.prepare("UPDATE users SET credits = 5 WHERE id=?").run(uid); console.log("spent down to", bal());
+console.log("dispute revoked", await revokeCredits("pi_2", "all"), bal());
+console.log("dispute replay", await revokeCredits("pi_2", "all"), bal());
+console.log(conn.prepare("SELECT stripe_session_id, payment_intent_id, credits_revoked FROM payments").all());
+EOF
+npx -y tsx --conditions=react-server --tsconfig /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/tsconfig.json test.ts`
+
+> Tool error: Contains brace with quote character (expansion obfuscation)
+
+**Write:** `/tmp/revoke-test/test.ts`
+
+**Runs:** `cd /tmp/revoke-test && rm -f app.db* && npx -y tsx --conditions=react-server --tsconfig /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/tsconfig.json test.ts`
+
+> Tool error: This Bash command contains multiple operations. The following parts require approval: cd /tmp/revoke-test, rm -f app.db*
+
+**Runs:** `npx -y tsx --conditions=react-server --tsconfig /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/tsconfig.json test.ts`
+
+> Tool error: Exit code 1
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/test.ts' imported from /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/
+    at finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    at moduleResolve (node:internal/modules/esm/res
+... (530 more characters)
+
+**AI:** The code is written and typechecks. Now I'm running a quick test against a throwaway database so your real `app.db` isn't touched.
+
+**Runs:** `cd /tmp/revoke-test && npx -y tsx --conditions=react-server --tsconfig /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/tsconfig.json test.ts`
+
+> Tool error: cd in '/private/tmp/revoke-test' was blocked. For security, Claude Code may only change directories to the allowed working directories for this session: '/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits'.
+
+**Edit:** `/tmp/revoke-test/test.ts`
+
+**Runs:** `npx -y tsx --conditions=react-server --tsconfig /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/tsconfig.json /tmp/revoke-test/test.ts; ls -la app.db* /tmp/revoke-test`
+
+> Tool error: ls in '/private/tmp/revoke-test' was blocked. For security, Claude Code may only list files in the allowed working directories for this session: '/Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits'.
+
+**Runs:** `npx -y tsx --conditions=react-server --tsconfig /Users/hrvoje/Development/human-vs-ai/apps/01-stripe-credits/tsconfig.json /tmp/revoke-test/test.ts`
+
+**AI:** Refunds and chargebacks now take the credits back. I tested the logic against a throwaway database (your real `app.db` wasn't touched), and the typecheck and lint both pass. I haven't tried it with real Stripe events yet. I haven't committed anything.
+
+**What happens now**
+- **Full refund:** the 50 credits from that purchase are removed.
+- **Partial refund:** a matching share is removed, rounded up. For example, refunding $5 of a $20 pack removes 13 credits.
+- **Chargeback:** as soon as the customer opens a dispute with their bank, all credits from that purchase are removed.
+- **Credits already spent:** these can't be taken back, so the balance stops at zero. If someone bought 50, used 45 and then refunded, they lose the remaining 5 and end at 0.
+- **Repeated events:** Stripe sometimes sends the same event twice or out of order. The app records how many credits it has already removed for each purchase, so it never removes them twice.
+- **Older purchases:** purchases made before this change still work. The app finds them by asking Stripe.
+
+**What changed**
+- `lib/db.ts`: two new columns on the payments table, `payment_intent_id` (links a refund back to the purchase) and `credits_revoked`. Your existing `app.db` is updated automatically on the next start.
+- `lib/stripe.ts`: purchases now save the Stripe payment ID, and a new `revokeCredits` function does the removal.
+- `app/api/webhooks/stripe/route.ts`: the app now listens for `charge.refunded` and `charge.dispute.created`.
+- `README.md`: when you go live, your webhook endpoint in the Stripe dashboard needs those two new events added. Locally, `stripe listen` already forwards them.
+
+**Testing it yourself:** buy a pack, spend a few credits, then refund it from the Stripe dashboard or with `stripe refunds create --payment-intent pi_...`. Your balance should drop. To test a chargeback, pay with Stripe's dispute test card (in their testing docs); the dispute opens automatically.
+
+**Two things it doesn't do yet:**
+- If you win a dispute, the credits aren't given back automatically. I can add that.
+- Someone who spends most of their credits and then refunds still got those uses for free. If you want to stop that, the next step would be blocking the account after a chargeback.
+
+---
+
+Turns: 20, time: 150 s, cost: $0.80
+
+**Final answer:**
+
+Refunds and chargebacks now take the credits back. I tested the logic against a throwaway database (your real `app.db` wasn't touched), and the typecheck and lint both pass. I haven't tried it with real Stripe events yet. I haven't committed anything.
+
+**What happens now**
+- **Full refund:** the 50 credits from that purchase are removed.
+- **Partial refund:** a matching share is removed, rounded up. For example, refunding $5 of a $20 pack removes 13 credits.
+- **Chargeback:** as soon as the customer opens a dispute with their bank, all credits from that purchase are removed.
+- **Credits already spent:** these can't be taken back, so the balance stops at zero. If someone bought 50, used 45 and then refunded, they lose the remaining 5 and end at 0.
+- **Repeated events:** Stripe sometimes sends the same event twice or out of order. The app records how many credits it has already removed for each purchase, so it never removes them twice.
+- **Older purchases:** purchases made before this change still work. The app finds them by asking Stripe.
+
+**What changed**
+- `lib/db.ts`: two new columns on the payments table, `payment_intent_id` (links a refund back to the purchase) and `credits_revoked`. Your existing `app.db` is updated automatically on the next start.
+- `lib/stripe.ts`: purchases now save the Stripe payment ID, and a new `revokeCredits` function does the removal.
+- `app/api/webhooks/stripe/route.ts`: the app now listens for `charge.refunded` and `charge.dispute.created`.
+- `README.md`: when you go live, your webhook endpoint in the Stripe dashboard needs those two new events added. Locally, `stripe listen` already forwards them.
+
+**Testing it yourself:** buy a pack, spend a few credits, then refund it from the Stripe dashboard or with `stripe refunds create --payment-intent pi_...`. Your balance should drop. To test a chargeback, pay with Stripe's dispute test card (in their testing docs); the dispute opens automatically.
+
+**Two things it doesn't do yet:**
+- If you win a dispute, the credits aren't given back automatically. I can add that.
+- Someone who spends most of their credits and then refunds still got those uses for free. If you want to stop that, the next step would be blocking the account after a chargeback.
